@@ -218,10 +218,9 @@ body {
     justify-content: center;
     background-color: transparent;
     border: none;
-    border-radius: 0;
+    padding: 0;
     cursor: pointer;
     transition: transform var(--transition-fast), opacity var(--transition-base);
-    padding: 0;
 }
 
 .submit-button:hover {
@@ -242,8 +241,12 @@ body {
 .enter-icon {
     width: 36px;
     height: 36px;
-    /* Pixel art style - sharp edges */
-    shape-rendering: crispEdges;
+    display: block;
+    /* Crisp pixel art rendering */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
 /* ===================================
