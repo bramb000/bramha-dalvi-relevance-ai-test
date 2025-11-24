@@ -1,0 +1,318 @@
+/* ===================================
+   CSS Custom Properties (Design Tokens)
+   =================================== */
+:root {
+    /* Colors */
+    --color-background: #ffffff;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #6b7280;
+    --color-border: #e5e7eb;
+    --color-accent: #6366f1;
+    --color-accent-hover: #4f46e5;
+    --color-input-bg: #f9fafb;
+    --color-input-border: #d1d5db;
+    --color-input-focus: #6366f1;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 2.5rem;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+
+    /* Border Radius */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 200ms ease-in-out;
+    --transition-slow: 300ms ease-in-out;
+}
+
+/* ===================================
+   Reset & Base Styles
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===================================
+   Header Component
+   =================================== */
+.header {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    height: 32px;
+    width: auto;
+}
+
+/* ===================================
+   Main Content Area
+   =================================== */
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2xl);
+}
+
+.chat-prompt {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* ===================================
+   Chat Input Area
+   =================================== */
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--color-input-bg);
+    border: 2px solid var(--color-input-border);
+    border-radius: var(--radius-xl);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.input-container:focus-within {
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
+.chat-input {
+    width: 100%;
+    min-height: 60px;
+    max-height: 200px;
+    padding: 0;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+}
+
+.chat-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.chat-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-input::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-input::-webkit-scrollbar-thumb {
+    background: var(--color-input-border);
+    border-radius: var(--radius-full);
+}
+
+.chat-input::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-secondary);
+}
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* ===================================
+   Submit Button with Pixel Art Enter Key
+   =================================== */
+.submit-button {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: transform var(--transition-fast), opacity var(--transition-base);
+    padding: 0;
+}
+
+.submit-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+.submit-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.enter-icon {
+    width: 36px;
+    height: 36px;
+    /* Pixel art style - sharp edges */
+    shape-rendering: crispEdges;
+}
+
+/* ===================================
+   Responsive Design - Mobile
+   =================================== */
+@media (max-width: 768px) {
+    .header-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .logo-image {
+        height: 28px;
+    }
+
+    .main-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .chat-container {
+        gap: var(--spacing-xl);
+    }
+
+    .chat-prompt {
+        font-size: var(--font-size-2xl);
+    }
+
+    .input-container {
+        padding: var(--spacing-sm);
+    }
+
+    .chat-input {
+        font-size: var(--font-size-sm);
+        min-height: 40px;
+    }
+
+    .submit-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .enter-icon {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-prompt {
+        font-size: var(--font-size-xl);
+    }
+
+    .main-content {
+        padding: var(--spacing-md);
+    }
+}
+
+/* ===================================
+   Accessibility & Focus States
+   =================================== */
+.submit-button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

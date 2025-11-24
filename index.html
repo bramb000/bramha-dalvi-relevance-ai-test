@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Chat Interface">
+    <title>Chat - Relevance AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="logo-image">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="chat-container">
+            <h1 class="chat-prompt">What can we help with today?</h1>
+
+            <!-- Chat Input Area -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea id="chatInput" class="chat-input" placeholder="Type your message..." rows="1"
+                        aria-label="Chat message input"></textarea>
+                </div>
+                <div class="button-row">
+                    <button id="submitButton" class="submit-button" aria-label="Submit message" type="button">
+                        <!-- Pixel Art Enter Key Button -->
+                        <svg class="enter-icon" width="36" height="36" viewBox="0 0 36 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer shadow/border for depth -->
+                            <rect x="0" y="0" width="36" height="36" rx="8" fill="#3D4148" />
+                            <!-- Main button background -->
+                            <rect x="1" y="1" width="34" height="34" rx="7" fill="#4A4F5A" />
+                            <!-- Mid layer -->
+                            <rect x="2" y="2" width="32" height="32" rx="6" fill="#5A5F6B" />
+                            <!-- Inner surface -->
+                            <rect x="3" y="3" width="30" height="29" rx="5" fill="#6B7280" />
+                            <!-- Top highlight for 3D effect -->
+                            <rect x="4" y="4" width="28" height="4" rx="2" fill="#7D8490" opacity="0.5" />
+
+                            <!-- Enter arrow symbol (pixel art style with square caps) -->
+                            <path d="M10 18H24" stroke="white" stroke-width="2.5" stroke-linecap="square" />
+                            <path d="M24 18L20 14" stroke="white" stroke-width="2.5" stroke-linecap="square"
+                                stroke-linejoin="miter" />
+                            <path d="M24 18L20 22" stroke="white" stroke-width="2.5" stroke-linecap="square"
+                                stroke-linejoin="miter" />
+                            <path d="M24 11V15" stroke="white" stroke-width="2.5" stroke-linecap="square" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
