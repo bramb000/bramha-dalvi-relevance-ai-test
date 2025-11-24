@@ -127,15 +127,38 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-2xl);
+    gap: 0;
+    position: relative;
 }
 
-.chat-prompt {
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-    text-align: center;
-    line-height: 1.2;
+/* ===================================
+   Character Sitting on Top of Input
+   =================================== */
+.character-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    /* Sit exactly on top */
+    z-index: 1;
+    /* Ensure visible */
+    pointer-events: none;
+}
+
+.pixel-character {
+    width: 128px;
+    /* Larger size */
+    height: 128px;
+    display: block;
+    /* Critical: Ensures pixel art stays crisp at any size */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+    /* Smooth transitions between sprite changes */
+    transition: opacity 0.2s ease-in-out;
 }
 
 /* ===================================
@@ -147,10 +170,14 @@ body {
     flex-direction: column;
     gap: var(--spacing-sm);
     padding: var(--spacing-md);
+    /* Removed extra top padding since character is behind */
     background-color: var(--color-input-bg);
     border: 2px solid var(--color-input-border);
     border-radius: var(--radius-xl);
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    position: relative;
+    z-index: 1;
+    /* In front of character */
 }
 
 .input-container:focus-within {
@@ -249,6 +276,16 @@ body {
     image-rendering: crisp-edges;
 }
 
+/* Ensure all character sprite images are crisp */
+img[src*="character/"],
+img[src*="assets/character/"] {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
 /* ===================================
    Responsive Design - Mobile
    =================================== */
@@ -279,9 +316,15 @@ body {
         gap: 0;
     }
 
-    .chat-prompt {
-        font-size: var(--font-size-2xl);
-        padding: var(--spacing-lg) var(--spacing-md);
+    .character-wrapper {
+        margin-bottom: 0;
+        /* Sit exactly on top */
+    }
+
+    .pixel-character {
+        width: 96px;
+        /* Smaller but still large on mobile */
+        height: 96px;
     }
 
     .input-container {
@@ -296,6 +339,16 @@ body {
         background-color: var(--color-input-bg);
         box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
         z-index: 50;
+    }
+
+    /* Ensure character stays behind fixed input on mobile */
+    .character-wrapper {
+        z-index: 40;
+        /* Lower than input z-index 50 */
+        /* We need to position it relative to the fixed input? 
+           No, if input is fixed, character is in flow. 
+           We might need to adjust mobile layout strategy if character needs to stick to input.
+           For now, let's keep it in flow above the empty space. */
     }
 
     .chat-input {
@@ -315,8 +368,13 @@ body {
 }
 
 @media (max-width: 480px) {
-    .chat-prompt {
-        font-size: var(--font-size-xl);
+    .pixel-character {
+        width: 80px;
+        height: 80px;
+    }
+
+    .character-wrapper {
+        margin-bottom: -25px;
     }
 }
 
@@ -334,5 +392,9 @@ body {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    .pixel-character {
+        transition: none !important;
     }
 }
