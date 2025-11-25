@@ -1,9 +1,4 @@
-"use strict";
-/**
- * Chat Interface with Text-Tracking Character and Simulated AI Conversation
- */
-
-// Character tracking class
+// Character direction tracking class
 class CharacterTracker {
     constructor(characterElement, textarea) {
         this.currentDirection = 'idle';
@@ -11,79 +6,76 @@ class CharacterTracker {
         this.UPDATE_THRESHOLD = 50; // ms between updates
         this.character = characterElement;
         this.textarea = textarea;
-        // Create mirror div for calculating cursor position
         this.mirrorDiv = document.createElement('div');
         this.initMirrorDiv();
         this.init();
     }
 
     initMirrorDiv() {
-        // Style the mirror div to match textarea exactly
-        const style = window.getComputedStyle(this.textarea);
+        // Create a mirror div to calculate cursor position
         this.mirrorDiv.style.position = 'absolute';
-        this.mirrorDiv.style.top = '-9999px';
-        this.mirrorDiv.style.left = '-9999px';
         this.mirrorDiv.style.visibility = 'hidden';
         this.mirrorDiv.style.whiteSpace = 'pre-wrap';
         this.mirrorDiv.style.wordWrap = 'break-word';
-        // Copy relevant styles
-        const properties = [
-            'width', 'padding', 'border', 'fontFamily', 'fontSize',
-            'fontWeight', 'lineHeight', 'letterSpacing', 'boxSizing'
-        ];
-        properties.forEach(prop => {
-            this.mirrorDiv.style[prop] = style[prop];
-        });
         document.body.appendChild(this.mirrorDiv);
-        // Update width on resize
-        window.addEventListener('resize', () => {
-            this.mirrorDiv.style.width = window.getComputedStyle(this.textarea).width;
-        });
     }
 
     init() {
-        const update = () => this.updateCharacterDirection();
-        this.textarea.addEventListener('input', update);
-        this.textarea.addEventListener('keyup', update);
-        this.textarea.addEventListener('click', update);
-        this.textarea.addEventListener('scroll', update);
-        // Return to idle when empty and blurred
-        this.textarea.addEventListener('blur', () => {
-            if (this.textarea.value.trim() === '') {
-                this.setDirection('idle');
-            }
-        });
+        // Update on input
+        this.textarea.addEventListener('input', () => this.updateDirection());
+        this.textarea.addEventListener('click', () => this.updateDirection());
+        this.textarea.addEventListener('keyup', () => this.updateDirection());
     }
 
-    updateCharacterDirection() {
+    getCursorPosition() {
+        const textareaRect = this.textarea.getBoundingClientRect();
+        const textareaStyles = window.getComputedStyle(this.textarea);
+
+        // Copy styles to mirror div
+        this.mirrorDiv.style.width = textareaStyles.width;
+        this.mirrorDiv.style.font = textareaStyles.font;
+        this.mirrorDiv.style.padding = textareaStyles.padding;
+        this.mirrorDiv.style.border = textareaStyles.border;
+        this.mirrorDiv.style.lineHeight = textareaStyles.lineHeight;
+
+        // Get text before cursor
+        const cursorPos = this.textarea.selectionStart;
+        const textBeforeCursor = this.textarea.value.substring(0, cursorPos);
+
+        // Set mirror div content
+        this.mirrorDiv.textContent = textBeforeCursor;
+
+        // Add a span to measure cursor position
+        const cursorSpan = document.createElement('span');
+        cursorSpan.textContent = '|';
+        this.mirrorDiv.appendChild(cursorSpan);
+
+        const cursorSpanRect = cursorSpan.getBoundingClientRect();
+        const mirrorDivRect = this.mirrorDiv.getBoundingClientRect();
+
+        return {
+            x: cursorSpanRect.left - mirrorDivRect.left,
+            y: cursorSpanRect.top - mirrorDivRect.top
+        };
+    }
+
+    updateDirection() {
         const now = Date.now();
         if (now - this.lastUpdateTime < this.UPDATE_THRESHOLD) {
             return;
         }
         this.lastUpdateTime = now;
-        const text = this.textarea.value;
-        if (text.length === 0) {
-            this.setDirection('idle');
-            return;
-        }
-        // Get cursor position
-        const cursorPosition = this.textarea.selectionStart;
-        const textBeforeCursor = text.substring(0, cursorPosition);
-        // Update mirror div content
-        this.mirrorDiv.textContent = textBeforeCursor;
-        const span = document.createElement('span');
-        span.textContent = '|'; // Cursor marker
-        this.mirrorDiv.appendChild(span);
-        // Calculate position relative to container width
-        const containerWidth = this.textarea.clientWidth;
-        const cursorLeft = span.offsetLeft;
-        // Determine direction based on visual position
-        let direction = 'look-down';
-        const relativePos = cursorLeft / containerWidth;
-        if (relativePos < 0.4) {
+
+        const cursorPos = this.getCursorPosition();
+        const textareaRect = this.textarea.getBoundingClientRect();
+        const centerX = textareaRect.width / 2;
+        const centerY = textareaRect.height / 2;
+
+        let direction;
+        if (cursorPos.x < centerX * 0.4) {
             direction = 'look-left';
         }
-        else if (relativePos > 0.6) {
+        else if (cursorPos.x > centerX * 1.6) {
             direction = 'look-right';
         }
         else {
@@ -229,7 +221,50 @@ Reading opinions, I can see many users subscribed over 7 months have praised the
 Would you like to see this analysis or confirm the methodology?`;
 
     addMessage('ai', aiResponse, 'assets/character/idle.png');
+
+    // Add expandable details container after AI message
+    addDetailsContainer();
 }
+
+// Add expandable details container
+function addDetailsContainer() {
+    const chatMessages = document.getElementById('chatMessages');
+
+    const detailsContainer = document.createElement('div');
+    detailsContainer.className = 'details-container';
+    detailsContainer.innerHTML = `
+        <div class="details-header">
+            <div class="details-title">
+                <svg class="details-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Verify truth
+            </div>
+            <svg class="details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </div>
+        <div class="details-content">
+            <div class="details-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim.</p>
+            </div>
+        </div>
+    `;
+
+    chatMessages.appendChild(detailsContainer);
+
+    // Add click handler for expand/collapse
+    const header = detailsContainer.querySelector('.details-header');
+    header.addEventListener('click', () => {
+        detailsContainer.classList.toggle('expanded');
+    });
+
+    // Scroll to show the new container
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Track if message has been submitted
+let messageSubmitted = false;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -245,12 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize character tracker
     new CharacterTracker(pixelCharacter, chatInput);
 
-    // Auto-resize textarea
-    chatInput.addEventListener('input', () => {
-        autoResizeTextarea(chatInput);
-        updateSubmitButton();
-    });
-
     // Update submit button state
     function updateSubmitButton() {
         const hasText = chatInput.value.trim().length > 0;
@@ -259,6 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle submit
     function handleSubmit() {
+        // Prevent submission if already submitted
+        if (messageSubmitted) {
+            return;
+        }
+
         const message = chatInput.value.trim();
         if (message) {
             // Always use the fixed message
@@ -272,10 +306,19 @@ document.addEventListener('DOMContentLoaded', () => {
             autoResizeTextarea(chatInput);
             updateSubmitButton();
 
+            // Mark as submitted to prevent further submissions
+            messageSubmitted = true;
+
             // Start AI conversation simulation
             simulateAIConversation();
         }
     }
+
+    // Auto-resize textarea
+    chatInput.addEventListener('input', () => {
+        autoResizeTextarea(chatInput);
+        updateSubmitButton();
+    });
 
     // Submit on button click
     submitButton.addEventListener('click', handleSubmit);
