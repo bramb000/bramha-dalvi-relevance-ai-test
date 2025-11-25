@@ -35,6 +35,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .header {
@@ -42,6 +43,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    background: var(--color-background);
 }
 
 .header-container {
@@ -58,14 +60,14 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: var(--spacing-lg);
-    padding-bottom: 0;
+    /* Remove horizontal padding so scrollbar can be at the edge */
+    padding: var(--spacing-lg) 0 0 0;
+    overflow-x: hidden;
 }
 
 .chat-container {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    /* Removed max-width and auto margins to allow full-width scrolling area */
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -158,6 +160,7 @@ img[src*="character/"] {
     image-rendering: pixelated;
 }
 
+/* Chat Messages Area */
 .chat-messages {
     flex: 1;
     width: 100%;
@@ -165,15 +168,24 @@ img[src*="character/"] {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
-    padding: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+    /* Vertical padding only */
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+/* Center the content items within the full-width scroll area */
+.message,
+.details-container {
+    width: calc(100% - 2 * var(--spacing-md));
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .message {
     display: flex;
     gap: var(--spacing-sm);
-    max-width: 100%;
 }
 
 .message.user {
@@ -211,14 +223,14 @@ img[src*="character/"] {
     word-wrap: break-word;
 }
 
+/* Expandable Details Container */
 .details-container {
-    width: 100%;
-    max-width: 100%;
-    min-height: 60px;
+    /* Width and margins are handled by the shared rule above */
     margin-top: var(--spacing-md);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background: #f9fafb;
+    overflow: hidden;
 }
 
 .details-header {
@@ -228,7 +240,8 @@ img[src*="character/"] {
     padding: var(--spacing-md);
     cursor: pointer;
     user-select: none;
-    min-height: 60px;
+    height: 60px;
+    /* Fixed height for header */
 }
 
 .details-header:hover {
@@ -285,6 +298,7 @@ img[src*="character/"] {
     word-wrap: break-word;
 }
 
+/* Thought Bubble */
 .thought-bubble {
     position: absolute;
     top: -80px;
@@ -326,6 +340,7 @@ img[src*="character/"] {
     }
 }
 
+/* Animations */
 .character-slide-down {
     animation: slideDown 1s ease-in forwards !important;
     z-index: 50 !important;
@@ -363,6 +378,7 @@ img[src*="character/"] {
     display: none;
 }
 
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .character-wrapper {
         bottom: 170px;
@@ -374,7 +390,14 @@ img[src*="character/"] {
     }
 
     .chat-messages {
-        max-height: calc(100vh - 200px);
+        max-height: calc(100vh - 220px);
+        padding-bottom: 2rem;
+    }
+
+    /* On mobile, use smaller side margins */
+    .message,
+    .details-container {
+        width: calc(100% - 2 * var(--spacing-sm));
     }
 }
 
@@ -386,5 +409,9 @@ img[src*="character/"] {
     .pixel-character {
         width: 80px;
         height: 80px;
+    }
+
+    .chat-messages {
+        max-height: calc(100vh - 200px);
     }
 }
