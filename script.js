@@ -333,4 +333,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial state
     updateSubmitButton();
+
+    // Track input container height for character positioning
+    function updateInputHeight() {
+        const inputContainer = document.querySelector('.input-container');
+        if (inputContainer) {
+            const height = inputContainer.offsetHeight;
+            // Add bottom margin (1rem = 16px) to the height
+            const totalHeight = height + 16;
+            document.documentElement.style.setProperty('--input-height', `${totalHeight}px`);
+        }
+    }
+
+    const inputContainer = document.querySelector('.input-container');
+    if (inputContainer) {
+        new ResizeObserver(updateInputHeight).observe(inputContainer);
+        // Also update on window resize
+        window.addEventListener('resize', updateInputHeight);
+        // Initial update
+        updateInputHeight();
+    }
 });
