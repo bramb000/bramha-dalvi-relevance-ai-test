@@ -229,9 +229,6 @@ Reading opinions, I can see many users subscribed over 7 months have praised the
 Would you like to see this analysis or confirm the methodology?`;
 
     addMessage('ai', aiResponse, 'assets/character/idle.png');
-
-    // Move input to bottom
-    chatContainer.classList.add('has-messages');
 }
 
 // Initialize when DOM is loaded

@@ -116,18 +116,19 @@ body {
 .main-content {
     flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xl) var(--spacing-lg);
+    flex-direction: column;
+    padding: var(--spacing-lg);
+    padding-bottom: 0;
+    overflow: hidden;
 }
 
 .chat-container {
     width: 100%;
     max-width: 800px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0;
+    height: 100%;
     position: relative;
 }
 
@@ -135,13 +136,16 @@ body {
    Character Sitting on Top of Input
    =================================== */
 .character-wrapper {
-    position: relative;
+    position: fixed;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 101;
+    pointer-events: none;
+    max-width: 800px;
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 0;
-    z-index: 1;
-    pointer-events: none;
 }
 
 .pixel-character {
@@ -160,7 +164,15 @@ body {
    Chat Input Area
    =================================== */
 .input-container {
-    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: var(--spacing-md);
+    width: calc(100% - 2rem);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
@@ -169,8 +181,8 @@ body {
     border: 2px solid var(--color-input-border);
     border-radius: var(--radius-xl);
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
-    position: relative;
-    z-index: 1;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
 }
 
 .input-container:focus-within {
@@ -282,15 +294,16 @@ img[src*="assets/character/"] {
    Chat Messages Area
    =================================== */
 .chat-messages {
+    flex: 1;
     width: 100%;
-    max-width: 800px;
-    margin-top: var(--spacing-xl);
+    max-height: calc(100vh - 250px);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
     overflow-y: auto;
-    max-height: 500px;
+    overflow-x: hidden;
 }
 
 .message {
@@ -318,8 +331,8 @@ img[src*="assets/character/"] {
 }
 
 .message.user .message-content {
-    background-color: var(--color-accent);
-    color: white;
+    background-color: #F4F4F4;
+    color: var(--color-text-primary);
     border-radius: var(--radius-lg);
     padding: var(--spacing-sm) var(--spacing-md);
     max-width: 70%;
@@ -441,23 +454,24 @@ img[src*="assets/character/"] {
    Character and Bubble Exit Animations
    =================================== */
 .character-slide-down {
-    animation: slideDown 1s ease-in forwards;
+    animation: slideDown 1s ease-in forwards !important;
+    z-index: 50 !important;
 }
 
 @keyframes slideDown {
     from {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(-50%) translateY(0);
     }
 
     to {
         opacity: 0;
-        transform: translateY(150px);
+        transform: translateX(-50%) translateY(150px);
     }
 }
 
 .bubble-float-up {
-    animation: floatUp 1s ease-out forwards;
+    animation: floatUp 1s ease-out forwards !important;
 }
 
 @keyframes floatUp {
@@ -477,25 +491,6 @@ img[src*="assets/character/"] {
     display: none;
 }
 
-/* Move input to bottom when chat has messages */
-.chat-container.has-messages .input-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: var(--spacing-md);
-    width: calc(100% - 2rem);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: var(--shadow-lg);
-    z-index: 100;
-}
-
-.chat-container.has-messages {
-    padding-bottom: 120px;
-}
-
 /* ===================================
    Responsive Design - Mobile
    =================================== */
@@ -509,23 +504,12 @@ img[src*="assets/character/"] {
     }
 
     .main-content {
-        padding: 0;
-        padding-bottom: 180px;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 60px);
-    }
-
-    .chat-container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
+        padding: var(--spacing-sm);
+        padding-bottom: 0;
     }
 
     .character-wrapper {
-        margin-bottom: 0;
+        bottom: 170px;
     }
 
     .pixel-character {
@@ -535,24 +519,16 @@ img[src*="assets/character/"] {
 
     .input-container {
         padding: var(--spacing-sm);
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: var(--spacing-md);
-        width: calc(100% - 2rem);
-        background-color: var(--color-input-bg);
-        box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
-        z-index: 50;
-    }
-
-    .character-wrapper {
-        z-index: 40;
     }
 
     .chat-input {
         font-size: var(--font-size-sm);
         min-height: 40px;
+    }
+
+    .chat-messages {
+        max-height: calc(100vh - 200px);
+        padding-bottom: var(--spacing-md);
     }
 
     .submit-button {
@@ -573,7 +549,7 @@ img[src*="assets/character/"] {
     }
 
     .character-wrapper {
-        margin-bottom: -25px;
+        bottom: 150px;
     }
 }
 
