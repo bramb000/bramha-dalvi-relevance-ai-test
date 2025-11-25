@@ -155,6 +155,11 @@ body {
     cursor: not-allowed;
 }
 
+.submit-button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
 .enter-icon {
     width: 36px;
     height: 36px;
