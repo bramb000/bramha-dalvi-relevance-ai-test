@@ -140,24 +140,19 @@ body {
     display: flex;
     justify-content: center;
     margin-bottom: 0;
-    /* Sit exactly on top */
     z-index: 1;
-    /* Ensure visible */
     pointer-events: none;
 }
 
 .pixel-character {
     width: 128px;
-    /* Larger size */
     height: 128px;
     display: block;
-    /* Critical: Ensures pixel art stays crisp at any size */
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: nearest-neighbor;
-    /* Smooth transitions between sprite changes */
     transition: opacity 0.2s ease-in-out;
 }
 
@@ -170,14 +165,12 @@ body {
     flex-direction: column;
     gap: var(--spacing-sm);
     padding: var(--spacing-md);
-    /* Removed extra top padding since character is behind */
     background-color: var(--color-input-bg);
     border: 2px solid var(--color-input-border);
     border-radius: var(--radius-xl);
     transition: border-color var(--transition-base), box-shadow var(--transition-base);
     position: relative;
     z-index: 1;
-    /* In front of character */
 }
 
 .input-container:focus-within {
@@ -269,7 +262,6 @@ body {
     width: 36px;
     height: 36px;
     display: block;
-    /* Crisp pixel art rendering */
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
@@ -287,6 +279,224 @@ img[src*="assets/character/"] {
 }
 
 /* ===================================
+   Chat Messages Area
+   =================================== */
+.chat-messages {
+    width: 100%;
+    max-width: 800px;
+    margin-top: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.message {
+    display: flex;
+    gap: var(--spacing-sm);
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User messages - right aligned with bubble */
+.message.user {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.message.user .message-content {
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* AI messages - left aligned with avatar */
+.message.ai {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.message.ai .message-content {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    padding: var(--spacing-sm) 0;
+    max-width: 80%;
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+
+/* ===================================
+   Thought Bubble
+   =================================== */
+.thought-bubble {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    min-width: 200px;
+    max-width: 300px;
+    z-index: 10;
+    animation: bubbleAppear 0.3s ease-out;
+}
+
+@keyframes bubbleAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+.thought-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+}
+
+.thought-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--color-border);
+    z-index: -1;
+}
+
+.thought-bubble-content {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Typing cursor effect */
+.thought-bubble-content::after {
+    content: '|';
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ===================================
+   Character and Bubble Exit Animations
+   =================================== */
+.character-slide-down {
+    animation: slideDown 1s ease-in forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(150px);
+    }
+}
+
+.bubble-float-up {
+    animation: floatUp 1s ease-out forwards;
+}
+
+@keyframes floatUp {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-100px);
+    }
+}
+
+/* Hide character wrapper when conversation starts */
+.character-wrapper.hidden {
+    display: none;
+}
+
+/* Move input to bottom when chat has messages */
+.chat-container.has-messages .input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: var(--spacing-md);
+    width: calc(100% - 2rem);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+}
+
+.chat-container.has-messages {
+    padding-bottom: 120px;
+}
+
+/* ===================================
    Responsive Design - Mobile
    =================================== */
 @media (max-width: 768px) {
@@ -298,11 +508,9 @@ img[src*="assets/character/"] {
         height: 28px;
     }
 
-    /* Mobile layout: anchor input to bottom, center prompt */
     .main-content {
         padding: 0;
         padding-bottom: 180px;
-        /* Space for fixed input at bottom */
         align-items: center;
         justify-content: center;
         min-height: calc(100vh - 60px);
@@ -318,18 +526,15 @@ img[src*="assets/character/"] {
 
     .character-wrapper {
         margin-bottom: 0;
-        /* Sit exactly on top */
     }
 
     .pixel-character {
         width: 96px;
-        /* Smaller but still large on mobile */
         height: 96px;
     }
 
     .input-container {
         padding: var(--spacing-sm);
-        /* Fixed to bottom on mobile */
         position: fixed;
         bottom: 0;
         left: 0;
@@ -341,14 +546,8 @@ img[src*="assets/character/"] {
         z-index: 50;
     }
 
-    /* Ensure character stays behind fixed input on mobile */
     .character-wrapper {
         z-index: 40;
-        /* Lower than input z-index 50 */
-        /* We need to position it relative to the fixed input? 
-           No, if input is fixed, character is in flow. 
-           We might need to adjust mobile layout strategy if character needs to stick to input.
-           For now, let's keep it in flow above the empty space. */
     }
 
     .chat-input {
