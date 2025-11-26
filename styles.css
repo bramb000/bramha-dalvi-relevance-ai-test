@@ -95,7 +95,7 @@ body {
 .pixel-character {
     width: 128px;
     height: 128px;
-    image-rendering: pixelated;
+
 }
 
 .input-container {
@@ -163,12 +163,10 @@ body {
 .enter-icon {
     width: 36px;
     height: 36px;
-    image-rendering: pixelated;
+
 }
 
-img[src*="character/"] {
-    image-rendering: pixelated;
-}
+
 
 /* Chat Messages Area */
 .chat-messages {
@@ -221,7 +219,7 @@ img[src*="character/"] {
     height: 40px;
     border-radius: var(--radius-md);
     flex-shrink: 0;
-    image-rendering: pixelated;
+
 }
 
 .message.ai .message-content {
