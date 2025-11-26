@@ -56,15 +56,31 @@
     <div id="processModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">My process</h2>
+                <h2 class="modal-title">My Process</h2>
                 <button id="closeModal" class="modal-close" aria-label="Close modal">×</button>
             </div>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
+                <div class="modal-expander">
+                    <div class="modal-expander-header">
+                        <span class="modal-expander-title">My quantitative process</span>
+                        <svg class="modal-expander-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="modal-expander-content">
+                        <div class="modal-expander-body">
+                            <p class="query-label">I queried the table</p>
+                            <a href="#" class="table-link">prod-all-customer.userbase-table</a>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+  <span class="sql-function">COUNT</span>(*) <span class="sql-keyword">AS</span> total_users,
+  <span class="sql-function">AVG</span>(months_subscribed) <span class="sql-keyword">AS</span> avg_months_subscribed,
+  <span class="sql-function">AVG</span>(customer_lifetime_value) <span class="sql-keyword">AS</span> avg_clv
+<span class="sql-keyword">FROM</span>
+  `prod-all-customer.userbase-table`;</code></pre>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

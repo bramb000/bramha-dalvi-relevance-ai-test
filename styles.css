@@ -337,6 +337,104 @@ img[src*="character/"] {
     color: var(--color-text-secondary);
 }
 
+/* Modal Expander */
+.modal-expander {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.modal-expander-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #f9fafb;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.modal-expander-header:hover {
+    background: #f3f4f6;
+}
+
+.modal-expander-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.modal-expander-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--color-text-secondary);
+    transition: transform 0.2s ease;
+}
+
+.modal-expander.expanded .modal-expander-icon {
+    transform: rotate(90deg);
+}
+
+.modal-expander-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.modal-expander.expanded .modal-expander-content {
+    max-height: 600px;
+}
+
+.modal-expander-body {
+    padding: 16px;
+    background: white;
+}
+
+.query-label {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0 0 8px 0;
+}
+
+.table-link {
+    display: inline-block;
+    font-size: 13px;
+    color: #6366f1;
+    text-decoration: none;
+    margin-bottom: 12px;
+}
+
+.table-link:hover {
+    text-decoration: underline;
+}
+
+.sql-code {
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    margin: 0;
+    overflow-x: auto;
+}
+
+.sql-code code {
+    font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    display: block;
+    white-space: pre;
+}
+
+.sql-keyword {
+    color: #0066cc;
+    font-weight: 600;
+}
+
+.sql-function {
+    color: #cc6600;
+    font-weight: 600;
+}
+
 /* Thought Bubble */
 .thought-bubble {
     position: absolute;

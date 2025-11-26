@@ -369,4 +369,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Modal expander toggle
+    const expanderHeader = document.querySelector('.modal-expander-header');
+    if (expanderHeader) {
+        expanderHeader.addEventListener('click', () => {
+            const expander = document.querySelector('.modal-expander');
+            if (expander) {
+                expander.classList.toggle('expanded');
+            }
+        });
+    }
 });
