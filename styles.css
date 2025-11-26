@@ -185,7 +185,7 @@ img[src*="character/"] {
 
 /* Center the content items within the full-width scroll area */
 .message,
-.details-container {
+.verify-button-container {
     width: 90%;
     max-width: 800px;
     margin-left: auto;
@@ -234,83 +234,105 @@ img[src*="character/"] {
     overflow-wrap: break-word;
 }
 
-/* Expandable Details Container */
-.details-container {
+/* Verify Button */
+.verify-button-container {
     margin-top: var(--spacing-md);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: #f9fafb;
-    overflow: hidden;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
 }
 
-.details-header {
+.verify-button {
+    background: white;
+    border: 1.5px solid #d1d5db;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    font-weight: 500;
+}
+
+.verify-button:hover {
+    border-color: #9ca3af;
+}
+
+.verify-button:active {
+    border-color: #6b7280;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-md);
-    cursor: pointer;
-    user-select: none;
-    height: 60px;
-    width: 100%;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border);
 }
 
-.details-header:hover {
-    background: #f3f4f6;
-}
-
-.details-title {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
     color: var(--color-text-primary);
+    margin: 0;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.modal-close:hover {
+    background-color: #f3f4f6;
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
     flex: 1;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.details-icon {
-    width: 18px;
-    height: 18px;
-    color: var(--color-accent);
-    flex-shrink: 0;
-}
-
-.details-arrow {
-    width: 20px;
-    height: 20px;
-    color: var(--color-text-secondary);
-    transition: transform var(--transition-base);
-    transform: rotate(-90deg);
-    flex-shrink: 0;
-}
-
-.details-container.expanded .details-arrow {
-    transform: rotate(0deg);
-}
-
-.details-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.details-container.expanded .details-content {
-    max-height: 500px;
-}
-
-.details-body {
-    padding: var(--spacing-md);
-    padding-top: 0;
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
+.modal-body p {
+    margin: 0;
     line-height: 1.6;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    color: var(--color-text-secondary);
 }
 
 /* Thought Bubble */
@@ -406,12 +428,12 @@ img[src*="character/"] {
 
     .chat-messages {
         max-height: calc(100vh - 220px);
-        padding-bottom: 2rem;
+        padding-bottom: 6rem;
     }
 
     /* On mobile, use slightly wider width but ensure no overflow */
     .message,
-    .details-container {
+    .verify-button-container {
         width: 94%;
         max-width: 100%;
     }
@@ -430,5 +452,6 @@ img[src*="character/"] {
 
     .chat-messages {
         max-height: calc(100vh - 200px);
+        padding-bottom: 6rem;
     }
 }

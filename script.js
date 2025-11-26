@@ -216,51 +216,50 @@ async function simulateAIConversation() {
     // Add AI response
     const aiResponse = `Since launch of that feature, there is 3% increase in MRR. It appears a major contributing trend has been an average increase of 1.3 months of increased subscription by users.
 
-Reading opinions, I can see many users subscribed over 7 months have praised the diagnostic tool to allow them to create more trustable agents. Some power user, qualified by the number of agents they have, said that this allows them to create trusted agents that service their clients. New users with technical backgrounds have said this feature sets Relevance AI apart from other workforce builders as it's possible to understand where things go wrong while and after building.
-
-Would you like to see this analysis or confirm the methodology?`;
+Reading opinions, I can see many users subscribed over 7 months have praised the diagnostic tool to allow them to create more trustable agents. Some power user, qualified by the number of agents they have, said that this allows them to create trusted agents that service their clients. New users with technical backgrounds have said this feature sets Relevance AI apart from other workforce builders as it's possible to understand where things go wrong while and after building.`;
 
     addMessage('ai', aiResponse, 'assets/character/idle.png');
 
-    // Add expandable details container after AI message
-    addDetailsContainer();
+    // Add verify truth button after AI message
+    addVerifyButton();
 }
 
-// Add expandable details container
-function addDetailsContainer() {
+// Add verify truth button
+function addVerifyButton() {
     const chatMessages = document.getElementById('chatMessages');
 
-    const detailsContainer = document.createElement('div');
-    detailsContainer.className = 'details-container';
-    detailsContainer.innerHTML = `
-        <div class="details-header">
-            <div class="details-title">
-                <svg class="details-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Verify truth
-            </div>
-            <svg class="details-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </div>
-        <div class="details-content">
-            <div class="details-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim.</p>
-            </div>
-        </div>
-    `;
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'verify-button-container';
 
-    chatMessages.appendChild(detailsContainer);
+    const button = document.createElement('button');
+    button.className = 'verify-button';
+    button.textContent = 'Verify truth';
 
-    // Add click handler for expand/collapse
-    const header = detailsContainer.querySelector('.details-header');
-    header.addEventListener('click', () => {
-        detailsContainer.classList.toggle('expanded');
+    button.addEventListener('click', () => {
+        openModal();
     });
 
-    // Scroll to show the new container
+    buttonContainer.appendChild(button);
+    chatMessages.appendChild(buttonContainer);
+
+    // Scroll to show the new button
     chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Open modal
+function openModal() {
+    const modal = document.getElementById('processModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+// Close modal
+function closeModal() {
+    const modal = document.getElementById('processModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // Track if message has been submitted
@@ -352,5 +351,22 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', updateInputHeight);
         // Initial update
         updateInputHeight();
+    }
+
+    // Modal close handlers
+    const modal = document.getElementById('processModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    if (modal) {
+        // Close when clicking outside the modal content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     }
 });
