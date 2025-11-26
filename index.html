@@ -94,12 +94,25 @@
                     </div>
                     <div class="modal-expander-content">
                         <div class="modal-expander-body">
-                            <p class="query-label">I analyzed user feedback and sentiment</p>
-                            <p style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">
-                                Based on qualitative analysis of user reviews and feedback, I identified key themes
-                                around the diagnostic tool feature. Users particularly appreciated the transparency and
-                                debugging capabilities it provides.
-                            </p>
+                            <p class="query-label">I found this table linked to a Typeform that was has been live since
+                                2 October 2025</p>
+                            <a href="#" class="table-link">typeform-survey.oct-2-2025-feedback-diagnostic-v1</a>
+                            <pre class="sql-code"><code><span class="sql-keyword">SELECT</span>
+  response_id,
+  submitted_at,
+  email,
+  customer_segment,
+  nps_score,
+  pain_point,
+  feature_request,
+  satisfaction_rating,
+  completion_time_seconds
+<span class="sql-keyword">FROM</span>
+  `typeform-survey.oct-2-2025-feedback-diagnostic-v1`
+<span class="sql-keyword">WHERE</span>
+  submitted_at >= '2025-10-02'
+<span class="sql-keyword">ORDER BY</span>
+  submitted_at <span class="sql-keyword">DESC</span>;</code></pre>
                         </div>
                     </div>
                 </div>
