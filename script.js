@@ -124,19 +124,27 @@ class CharacterTracker {
         const textareaRect = this.textarea.getBoundingClientRect();
         const centerX = textareaRect.width / 2;
 
-        // Decide which direction based on cursor position
+        // Decide which direction based on cursor position (5 divisions)
         let direction;
-        if (cursorPos.x < centerX * 0.4) {
-            // Cursor is on the left side
+        if (cursorPos.x < centerX * 0.5) {
+            // Cursor is on the far left
             direction = 'look-left';
         }
-        else if (cursorPos.x > centerX * 1.6) {
-            // Cursor is on the right side
-            direction = 'look-right';
+        else if (cursorPos.x < centerX * 0.85) {
+            // Cursor is on the left-center
+            direction = 'look-down-left';
+        }
+        else if (cursorPos.x < centerX * 1.15) {
+            // Cursor is in the center
+            direction = 'look-down';
+        }
+        else if (cursorPos.x < centerX * 1.5) {
+            // Cursor is on the right-center
+            direction = 'look-down-right';
         }
         else {
-            // Cursor is in the middle
-            direction = 'look-down';
+            // Cursor is on the far right
+            direction = 'look-right';
         }
         this.setDirection(direction);
     }
@@ -153,7 +161,8 @@ class CharacterTracker {
 
             // Validate the direction name
             let spriteName = direction;
-            if (direction !== 'idle' && direction !== 'look-left' && direction !== 'look-right' && direction !== 'look-down') {
+            const validDirections = ['idle', 'look-left', 'look-down-left', 'look-down', 'look-down-right', 'look-right'];
+            if (!validDirections.includes(direction)) {
                 spriteName = 'idle';
             }
 
