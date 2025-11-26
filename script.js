@@ -608,7 +608,290 @@ document.addEventListener('DOMContentLoaded', () => {
             if (expander) {
                 // Toggle the 'expanded' class to show/hide content
                 expander.classList.toggle('expanded');
+
+                // If expanding the first expander, ensure graph is rendered
+                if (expander.classList.contains('expanded') && expander.querySelector('#abTestGraph')) {
+                    // Small delay to allow transition to start/finish so dimensions are correct
+                    setTimeout(renderGraph, 300);
+                }
             }
         });
     });
+
+    // Initial render of graph (in case it's already visible or for readiness)
+    renderGraph();
+
+    // Re-render on window resize
+    window.addEventListener('resize', () => {
+        renderGraph();
+    });
 });
+
+// ========================================
+// GRAPH RENDERING
+// ========================================
+/**
+ * Render the A/B Test Result Graph
+ * 
+ * Draws two bell curves (Normal Distribution) using SVG
+ * Includes hover effects and tooltips
+ */
+function renderGraph() {
+    const container = document.getElementById('abTestGraph');
+    if (!container) return;
+
+    // Clear previous content
+    container.innerHTML = '';
+
+    // Dimensions
+    const width = container.offsetWidth || 500;
+    const height = container.offsetHeight || 250;
+    const padding = { top: 40, right: 20, bottom: 40, left: 40 };
+    const graphWidth = width - padding.left - padding.right;
+    const graphHeight = height - padding.top - padding.bottom;
+
+    // Create SVG
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "graph-svg");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    container.appendChild(svg);
+
+    // Group for graph content
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("transform", `translate(${padding.left}, ${padding.top})`);
+    svg.appendChild(g);
+
+    // Data generation for Normal Distribution
+    // Formula: (1 / (sigma * sqrt(2*PI))) * exp(-0.5 * ((x - mu) / sigma)^2)
+    function normalDistribution(x, mu, sigma) {
+        const twoPi = 2 * Math.PI;
+        const exp = Math.exp(-0.5 * Math.pow((x - mu) / sigma, 2));
+        return (1 / (sigma * Math.sqrt(twoPi))) * exp;
+    }
+
+    // X-axis range (months)
+    const xMin = 4.5;
+    const xMax = 12.5;
+    const xScale = (val) => ((val - xMin) / (xMax - xMin)) * graphWidth;
+
+    // Y-axis scale (normalized for height)
+    // Max peak for sigma=0.5 is approx 0.8. We map 0.85 to 0 (top) and 0 to graphHeight (bottom)
+    const maxVal = 0.85;
+    const yScale = (val) => graphHeight - (val / maxVal) * graphHeight;
+
+    // Generate points for Curve A (Control/Group A) - Blue
+    // Mean = 8.8, Sigma = 0.6
+    const pointsA = [];
+    for (let x = xMin; x <= xMax; x += 0.1) {
+        const y = normalDistribution(x, 8.8, 0.6);
+        pointsA.push(`${xScale(x)},${yScale(y)}`);
+    }
+
+    // Generate points for Curve B (Variant/Group B) - Green
+    // Mean = 9.6, Sigma = 0.5 (Slightly tighter distribution)
+    const pointsB = [];
+    for (let x = xMin; x <= xMax; x += 0.1) {
+        const y = normalDistribution(x, 9.6, 0.5);
+        pointsB.push(`${xScale(x)},${yScale(y)}`);
+    }
+
+    // Draw Axes
+    const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    xAxis.setAttribute("x1", 0);
+    xAxis.setAttribute("y1", graphHeight);
+    xAxis.setAttribute("x2", graphWidth);
+    xAxis.setAttribute("y2", graphHeight);
+    xAxis.setAttribute("class", "axis-line");
+    g.appendChild(xAxis);
+
+    const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    yAxis.setAttribute("x1", 0);
+    yAxis.setAttribute("y1", 0);
+    yAxis.setAttribute("x2", 0);
+    yAxis.setAttribute("y2", graphHeight);
+    yAxis.setAttribute("class", "axis-line");
+    g.appendChild(yAxis);
+
+    // Y-axis Label
+    const yLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    yLabel.setAttribute("x", -graphHeight / 2);
+    yLabel.setAttribute("y", -30);
+    yLabel.setAttribute("transform", "rotate(-90)");
+    yLabel.setAttribute("class", "axis-label");
+    yLabel.textContent = "users";
+    g.appendChild(yLabel);
+
+    // X-axis Label
+    const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    xLabel.setAttribute("x", graphWidth / 2);
+    xLabel.setAttribute("y", graphHeight + 35);
+    xLabel.setAttribute("class", "axis-label");
+
+    // Styled X-axis label with colored A and B
+    const tspan1 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspan1.textContent = "months suscribed between user in ";
+    xLabel.appendChild(tspan1);
+
+    const tspanA = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspanA.textContent = "A";
+    tspanA.setAttribute("class", "legend-a");
+    xLabel.appendChild(tspanA);
+
+    const tspan2 = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspan2.textContent = " vs in ";
+    xLabel.appendChild(tspan2);
+
+    const tspanB = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspanB.textContent = "B";
+    tspanB.setAttribute("class", "legend-b");
+    xLabel.appendChild(tspanB);
+
+    g.appendChild(xLabel);
+
+    // X-axis Ticks
+    const ticks = [5, 6, 7, 8, 9, 10, 11, 12];
+    ticks.forEach(tick => {
+        const x = xScale(tick);
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", x);
+        text.setAttribute("y", graphHeight + 15);
+        text.setAttribute("class", "axis-tick-label");
+        text.textContent = tick;
+        g.appendChild(text);
+    });
+
+    // Draw Curves
+    const pathA = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathA.setAttribute("d", `M ${pointsA.join(' L ')}`);
+    pathA.setAttribute("class", "curve-a");
+    g.appendChild(pathA);
+
+    const pathB = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathB.setAttribute("d", `M ${pointsB.join(' L ')}`);
+    pathB.setAttribute("class", "curve-b");
+    g.appendChild(pathB);
+
+    // Vertical Lines for Means
+    const meanAX = xScale(8.8);
+    const meanBX = xScale(9.6);
+    const peakAY = yScale(normalDistribution(8.8, 8.8, 0.6));
+    const peakBY = yScale(normalDistribution(9.6, 9.6, 0.5));
+
+    const lineA = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    lineA.setAttribute("x1", meanAX);
+    lineA.setAttribute("y1", peakAY);
+    lineA.setAttribute("x2", meanAX);
+    lineA.setAttribute("y2", graphHeight);
+    lineA.setAttribute("class", "vertical-line-a");
+    g.appendChild(lineA);
+
+    const lineB = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    lineB.setAttribute("x1", meanBX);
+    lineB.setAttribute("y1", peakBY);
+    lineB.setAttribute("x2", meanBX);
+    lineB.setAttribute("y2", graphHeight);
+    lineB.setAttribute("class", "vertical-line-b");
+    g.appendChild(lineB);
+
+    // Difference Annotation
+    const diffText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    diffText.setAttribute("x", (meanAX + meanBX) / 2);
+    diffText.setAttribute("y", Math.min(peakAY, peakBY) - 10);
+    diffText.setAttribute("class", "graph-title");
+    diffText.textContent = "1.3 months";
+    g.appendChild(diffText);
+
+    // Tooltip Elements
+    const tooltip = document.createElement('div');
+    tooltip.className = 'graph-tooltip';
+    tooltip.innerHTML = 'Some dynamic data<br>information here';
+    container.appendChild(tooltip);
+
+    const connector = document.createElement('div');
+    connector.className = 'tooltip-connector';
+    container.appendChild(connector);
+
+    const dot = document.createElement('div');
+    dot.className = 'tooltip-dot';
+    container.appendChild(dot);
+
+    // Interaction Logic
+    function handleInteraction(e) {
+        // Get mouse/touch position relative to SVG
+        const rect = svg.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const x = clientX - rect.left - padding.left;
+        const y = clientY - rect.top - padding.top;
+
+        // Check if close to either curve
+        // Simple approximation: check if x is within range and y is somewhat close
+        // For a robust implementation, we'd find the closest point on the path
+        // Here we just show it if hovering over the graph area for simplicity as requested "hover or touch any part of the graph curve"
+        // But let's make it slightly smarter: show if within graph bounds
+
+        if (x >= 0 && x <= graphWidth && y >= 0 && y <= graphHeight) {
+            // Show tooltip
+            tooltip.style.opacity = '1';
+            connector.style.opacity = '1';
+            dot.style.opacity = '1';
+
+            // Position Dot at the cursor x, but snapped to the closest curve Y
+            // Let's snap to Curve A for x < midpoint, Curve B for x > midpoint to simulate "hovering curve"
+            // Or just follow mouse
+
+            // Re-calculate Y on curve for current X
+            const graphXValue = xMin + (x / graphWidth) * (xMax - xMin);
+            const yA = yScale(normalDistribution(graphXValue, 8.8, 0.6));
+            const yB = yScale(normalDistribution(graphXValue, 9.6, 0.5));
+
+            // Find which curve is closer to mouse Y
+            const distA = Math.abs(y - yA);
+            const distB = Math.abs(y - yB);
+
+            let targetY = distA < distB ? yA : yB;
+
+            // Position dot
+            const dotX = x + padding.left;
+            const dotY = targetY + padding.top;
+            dot.style.left = `${dotX}px`;
+            dot.style.top = `${dotY}px`;
+
+            // Position Tooltip (top left of dot usually)
+            const tooltipX = dotX - 120; // Shift left
+            const tooltipY = dotY - 60;  // Shift up
+            tooltip.style.left = `${tooltipX}px`;
+            tooltip.style.top = `${tooltipY}px`;
+
+            // Position Connector
+            // Draw line from tooltip to dot
+            // Simplified: just a horizontal line or similar? 
+            // The design shows a line from tooltip box to the dot.
+            // Let's use CSS transform to rotate the line
+            const dx = dotX - (tooltipX + 100); // Center of tooltip approx
+            const dy = dotY - (tooltipY + 30);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            const length = Math.sqrt(dx * dx + dy * dy);
+
+            connector.style.width = `${length}px`;
+            connector.style.left = `${tooltipX + 100}px`; // Start from tooltip center
+            connector.style.top = `${tooltipY + 30}px`;
+            connector.style.transform = `rotate(${angle}deg)`;
+
+        } else {
+            hideTooltip();
+        }
+    }
+
+    function hideTooltip() {
+        tooltip.style.opacity = '0';
+        connector.style.opacity = '0';
+        dot.style.opacity = '0';
+    }
+
+    svg.addEventListener('mousemove', handleInteraction);
+    svg.addEventListener('mouseleave', hideTooltip);
+    svg.addEventListener('touchstart', handleInteraction, { passive: true });
+    svg.addEventListener('touchend', hideTooltip);
+}

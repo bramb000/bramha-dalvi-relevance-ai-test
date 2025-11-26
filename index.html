@@ -83,9 +83,11 @@
 
                             <p
                                 style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-top: 16px;">
-                                I also use the A/B test feature flag to compare users who experienced the feature
-                                compared to users who did not during the A/B test conducted between 11 October 2025 and
-                                4 November 2025. I conducted a z-test to see if there is any meaningful difference
+                                I also use the A/B test feature flag column <span
+                                    class="code-badge">a-b-test-tags</span> in prod-all-customers.userbase-table to
+                                compare users who experienced the feature compared to users who did not during the A/B
+                                test conducted between 11 October 2025 and 4 November 2025. I conducted a z-test to see
+                                if there is any meaningful difference
                             </p>
 
                             <p
@@ -98,6 +100,9 @@
                                 style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-top: 12px;">
                                 The alpha value was 0.03, meaning this is a statistically significant change
                             </p>
+
+                            <!-- Graph Container -->
+                            <div id="abTestGraph" class="graph-container"></div>
                         </div>
                     </div>
                 </div>

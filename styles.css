@@ -385,12 +385,7 @@ body {
 }
 
 .modal-expander.expanded .modal-expander-content {
-    max-height: 600px;
-}
-
-.modal-expander-body {
-    padding: 16px;
-    background: white;
+    max-height: 2000px;
 }
 
 .query-label {
@@ -577,4 +572,137 @@ body {
         max-height: calc(100vh - 200px);
         padding-bottom: 6rem;
     }
+}
+
+/* Code Badge */
+.code-badge {
+    background-color: #6b7280;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+}
+
+/* Graph Styles */
+.graph-container {
+    margin-top: 24px;
+    width: 100%;
+    height: 250px;
+    position: relative;
+    font-family: var(--font-family);
+}
+
+.graph-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.axis-line {
+    stroke: #374151;
+    stroke-width: 1;
+}
+
+.axis-label {
+    font-size: 12px;
+    fill: #111827;
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.axis-tick-label {
+    font-size: 12px;
+    fill: #111827;
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.curve-a {
+    fill: none;
+    stroke: #4f46e5;
+    /* Indigo/Blue */
+    stroke-width: 1.5;
+    pointer-events: stroke;
+    cursor: pointer;
+}
+
+.curve-b {
+    fill: none;
+    stroke: #22c55e;
+    /* Green */
+    stroke-width: 1.5;
+    pointer-events: stroke;
+    cursor: pointer;
+}
+
+.vertical-line-a {
+    stroke: #4f46e5;
+    stroke-width: 1.5;
+}
+
+.vertical-line-b {
+    stroke: #22c55e;
+    stroke-width: 1.5;
+}
+
+.graph-title {
+    font-size: 14px;
+    fill: #111827;
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.legend-text {
+    font-size: 14px;
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.legend-a {
+    fill: #4f46e5;
+}
+
+.legend-b {
+    fill: #22c55e;
+}
+
+/* Tooltip */
+.graph-tooltip {
+    position: absolute;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    color: #111827;
+    pointer-events: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    max-width: 200px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-style: italic;
+}
+
+.tooltip-connector {
+    position: absolute;
+    height: 1px;
+    background-color: #d1d5db;
+    transform-origin: left center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.tooltip-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
