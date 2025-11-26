@@ -543,6 +543,26 @@ img[src*="character/"] {
         max-width: 100%;
     }
 
+    /* Stack AI messages vertically on mobile */
+    .message.ai {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .message.ai .message-avatar {
+        margin-bottom: 8px;
+    }
+
+    .message.ai .message-content {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Adjust verify button alignment for mobile */
+    .verify-button-container {
+        padding-left: 0;
+    }
+
     .input-container {
         width: calc(100% - 1rem);
         margin: 0.5rem;
