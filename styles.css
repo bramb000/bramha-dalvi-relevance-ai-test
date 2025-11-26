@@ -341,6 +341,11 @@ img[src*="character/"] {
 .modal-expander {
     border-radius: var(--radius-md);
     overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.modal-expander:last-child {
+    margin-bottom: 0;
 }
 
 .modal-expander-header {

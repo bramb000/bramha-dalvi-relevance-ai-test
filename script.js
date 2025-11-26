@@ -371,13 +371,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Modal expander toggle
-    const expanderHeader = document.querySelector('.modal-expander-header');
-    if (expanderHeader) {
-        expanderHeader.addEventListener('click', () => {
-            const expander = document.querySelector('.modal-expander');
+    const expanderHeaders = document.querySelectorAll('.modal-expander-header');
+    expanderHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const expander = header.closest('.modal-expander');
             if (expander) {
                 expander.classList.toggle('expanded');
             }
         });
-    }
+    });
 });
