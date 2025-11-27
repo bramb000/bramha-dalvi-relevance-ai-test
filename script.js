@@ -290,7 +290,7 @@ function addMessage(type, content, avatar = null) {
     // Add the message content
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';
-    contentDiv.textContent = content;
+    contentDiv.innerHTML = content; // Use innerHTML to support formatting
     messageDiv.appendChild(contentDiv);
 
     // Add to chat and scroll to show the new message
@@ -357,9 +357,14 @@ async function simulateAIConversation() {
     characterWrapper.classList.add('hidden');
 
     // The AI's response (hardcoded for this demo)
-    const aiResponse = `Since launch of that feature, there is 3% increase in MRR. It appears a major contributing trend has been an average increase of 1.3 months of increased subscription by users.
-
-Reading opinions, I can see many users subscribed over 7 months have praised the diagnostic tool to allow them to create more trustable agents. Some power user, qualified by the number of agents they have, said that this allows them to create trusted agents that service their clients. New users with technical backgrounds have said this feature sets Relevance AI apart from other workforce builders as it's possible to understand where things go wrong while and after building.`;
+    const aiResponse = `Since the launch of that feature, there has been a <strong>3% increase in MRR</strong> 📈. It appears a major contributing trend has been an average increase of <strong>1.3 months</strong> in subscription duration 🗓️.
+    <br><br>
+    Reading user opinions 🗣️:
+    <ul style="margin-top: 8px; padding-left: 20px; list-style-type: none;">
+        <li style="margin-bottom: 4px;">👥 <strong>Long-term users (>7 months)</strong> have praised the diagnostic tool for enabling more trustable agents.</li>
+        <li style="margin-bottom: 4px;">⚡ <strong>Power users</strong> noted it allows them to create trusted agents for their clients.</li>
+        <li>🛠️ <strong>Technical users</strong> appreciate the ability to debug and understand issues, setting Relevance AI apart from other builders.</li>
+    </ul>`;
 
     // Add the AI response to the chat
     addMessage('ai', aiResponse, 'assets/character/idle.png');

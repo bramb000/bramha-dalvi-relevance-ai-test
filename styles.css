@@ -95,7 +95,6 @@ body {
 .pixel-character {
     width: 128px;
     height: 128px;
-
 }
 
 .input-container {
@@ -163,10 +162,7 @@ body {
 .enter-icon {
     width: 36px;
     height: 36px;
-
 }
-
-
 
 /* Chat Messages Area */
 .chat-messages {
@@ -219,7 +215,6 @@ body {
     height: 40px;
     border-radius: var(--radius-md);
     flex-shrink: 0;
-
 }
 
 .message.ai .message-content {
@@ -230,6 +225,10 @@ body {
     line-height: 1.6;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+.message-content strong {
+    font-weight: 600;
 }
 
 /* Verify Button */
