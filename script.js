@@ -477,8 +477,14 @@ document.addEventListener('DOMContentLoaded', () => {
      * The button is disabled (grayed out) when the input is empty
      */
     function updateSubmitButton() {
+        if (messageSubmitted) {
+            submitButton.disabled = true;
+            chatInput.placeholder = "You cannot type now";
+            return;
+        }
         const hasText = chatInput.value.trim().length > 0;
         submitButton.disabled = !hasText;
+        chatInput.placeholder = "Type your message... (everything is hardcoded)";
     }
 
     // ========================================
@@ -511,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Mark as submitted to prevent further submissions
             messageSubmitted = true;
+            updateSubmitButton();
 
             // Start the AI's animated response sequence
             simulateAIConversation();

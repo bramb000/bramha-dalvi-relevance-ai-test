@@ -388,6 +388,11 @@ body {
     max-height: 2000px;
 }
 
+.modal-expander-body {
+    padding: 24px 16px 16px 16px;
+    background: white;
+}
+
 .query-label {
     font-size: 13px;
     color: var(--color-text-secondary);
