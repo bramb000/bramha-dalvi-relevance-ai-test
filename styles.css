@@ -227,13 +227,14 @@ body {
     overflow-wrap: break-word;
 }
 
+
 .message-content strong {
     font-weight: 600;
 }
 
 /* Verify Button */
 .verify-button-container {
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-xs);
     display: flex;
     justify-content: flex-start;
     /* Align with AI message text: avatar width (40px) + gap (0.75rem) */
