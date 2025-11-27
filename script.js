@@ -480,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (messageSubmitted) {
             submitButton.disabled = true;
             chatInput.disabled = true;
-            chatInput.placeholder = "You cannot type now";
+            chatInput.placeholder = "You cannot type now. Refresh the website to revisit from the start";
             return;
         }
         const hasText = chatInput.value.trim().length > 0;
