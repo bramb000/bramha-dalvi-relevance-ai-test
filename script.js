@@ -479,11 +479,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateSubmitButton() {
         if (messageSubmitted) {
             submitButton.disabled = true;
+            chatInput.disabled = true;
             chatInput.placeholder = "You cannot type now";
             return;
         }
         const hasText = chatInput.value.trim().length > 0;
         submitButton.disabled = !hasText;
+        chatInput.disabled = false;
         chatInput.placeholder = "Type your message... (everything is hardcoded)";
     }
 
