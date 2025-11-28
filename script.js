@@ -851,6 +851,7 @@ function initSidebar() {
     // Initialize sidebar state based on screen size
     if (window.innerWidth >= 769) {
         // Desktop: start expanded
+        sidebar.classList.add('open');
         document.body.classList.add('sidebar-open');
     } else {
         // Mobile: start collapsed (hidden)
