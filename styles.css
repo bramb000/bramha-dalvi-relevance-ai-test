@@ -1024,17 +1024,7 @@ body {
 }
 
 .sidebar:not(.open) .search-input {
-    width: 100%;
-    padding: 8px 12px 8px 36px;
-    background: var(--color-input-bg);
-    border: 2px solid var(--color-input-border);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-md);
-    font-family: var(--font-family);
-    font-size: 14px;
-    color: var(--color-text-primary);
-    outline: none;
-    transition: border-color 0.2s ease;
+    display: none;
 }
 
 .search-input:focus {
@@ -1223,7 +1213,7 @@ body {
 .account-panel {
     position: absolute;
     bottom: 76px; /* Height of footer + border */
-    left: 0;
+    left: 10px; /* Offset from left edge */
     width: 260px; /* Fixed width matching expanded sidebar */
     background: white;
     border: 1px solid var(--color-border);
@@ -1244,7 +1234,7 @@ body {
 }
 
 .account-panel-content {
-    padding: 8px;
+    padding: 16px;
 }
 
 
@@ -1341,7 +1331,7 @@ body {
     .account-panel {
     position: absolute;
     bottom: 76px; /* Height of footer + border */
-    left: 0;
+    left: 10px; /* Offset from left edge */
     width: 260px; /* Fixed width matching expanded sidebar */
     background: white;
     border: 1px solid var(--color-border);
