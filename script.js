@@ -918,10 +918,18 @@ function renderGraph() {
  * Sidebar Manager
  * 
  * Handles:
- * - Sidebar toggle (open/close)
+// ========================================
+// SIDEBAR FUNCTIONALITY
+// ========================================
+
+/**
+ * Sidebar Manager
+ * 
+ * Handles:
+ * - Sidebar toggle (collapsed/expanded)
  * - Chat history rendering
  * - Account panel toggle
- * - Overlay interactions
+ * - Body margin adjustment
  */
 
 // Chat history data (hardcoded for demo)
@@ -944,22 +952,27 @@ function initSidebar() {
         return;
     }
 
+    // Initialize with open state and body margin
+    document.body.classList.add('sidebar-open');
+
     // Toggle sidebar
     function toggleSidebar() {
         const isOpen = sidebar.classList.toggle('open');
-        sidebarOverlay.classList.toggle('active', isOpen);
+        document.body.classList.toggle('sidebar-open', isOpen);
 
-        // On desktop, shift body content
-        if (window.innerWidth >= 769) {
-            document.body.classList.toggle('sidebar-open', isOpen);
+        // On mobile, show/hide overlay
+        if (window.innerWidth < 769) {
+            sidebarOverlay.classList.toggle('active', isOpen);
         }
     }
 
-    // Close sidebar
+    // Close sidebar (mobile only)
     function closeSidebar() {
-        sidebar.classList.remove('open');
-        sidebarOverlay.classList.remove('active');
-        document.body.classList.remove('sidebar-open');
+        if (window.innerWidth < 769) {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+        }
     }
 
     // Toggle account panel
@@ -1015,7 +1028,7 @@ function initSidebar() {
         }
     });
 
-    // Close sidebar on ESC key
+    // Close sidebar/account panel on ESC key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeSidebar();
@@ -1031,9 +1044,6 @@ function initSidebar() {
             if (window.innerWidth >= 769) {
                 // Desktop: remove overlay
                 sidebarOverlay.classList.remove('active');
-            } else {
-                // Mobile: remove body shift
-                document.body.classList.remove('sidebar-open');
             }
         }, 250);
     });
