@@ -909,3 +909,144 @@ function renderGraph() {
     svg.addEventListener('touchstart', handleInteraction, { passive: true });
     svg.addEventListener('touchend', hideTooltip);
 }
+
+// ========================================
+// SIDEBAR FUNCTIONALITY
+// ========================================
+
+/**
+ * Sidebar Manager
+ * 
+ * Handles:
+ * - Sidebar toggle (open/close)
+ * - Chat history rendering
+ * - Account panel toggle
+ * - Overlay interactions
+ */
+
+// Chat history data (hardcoded for demo)
+const chatHistory = [
+    { id: 1, title: "Research on marketing funnel", timestamp: "2 hours ago" },
+    { id: 2, title: "Analysing pricing tiers and segments", timestamp: "Yesterday" }
+];
+
+// Initialize sidebar functionality when DOM is loaded
+function initSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const accountPanel = document.getElementById('accountPanel');
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const chatHistoryList = document.getElementById('chatHistoryList');
+
+    if (!sidebar || !sidebarToggle) {
+        console.error('Sidebar elements not found');
+        return;
+    }
+
+    // Toggle sidebar
+    function toggleSidebar() {
+        const isOpen = sidebar.classList.toggle('open');
+        sidebarOverlay.classList.toggle('active', isOpen);
+
+        // On desktop, shift body content
+        if (window.innerWidth >= 769) {
+            document.body.classList.toggle('sidebar-open', isOpen);
+        }
+    }
+
+    // Close sidebar
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+    }
+
+    // Toggle account panel
+    function toggleAccountPanel(e) {
+        e.stopPropagation();
+        accountPanel.classList.toggle('open');
+    }
+
+    // Close account panel
+    function closeAccountPanel() {
+        accountPanel.classList.remove('open');
+    }
+
+    // Render chat history
+    function renderChatHistory() {
+        if (!chatHistoryList) return;
+
+        chatHistoryList.innerHTML = chatHistory.map(chat => `
+            <button class="chat-item" data-chat-id="${chat.id}">
+                <svg class="chat-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <div class="chat-item-content">
+                    <div class="chat-item-title">${chat.title}</div>
+                    <div class="chat-item-timestamp">${chat.timestamp}</div>
+                </div>
+            </button>
+        `).join('');
+
+        // Add click handlers to chat items (currently just visual)
+        chatHistoryList.querySelectorAll('.chat-item').forEach(item => {
+            item.addEventListener('click', () => {
+                console.log('Chat item clicked:', item.dataset.chatId);
+                // In a real app, this would load the chat conversation
+            });
+        });
+    }
+
+    // Event Listeners
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    if (userProfileBtn) {
+        userProfileBtn.addEventListener('click', toggleAccountPanel);
+    }
+
+    // Close account panel when clicking outside
+    document.addEventListener('click', (e) => {
+        if (accountPanel.classList.contains('open') &&
+            !accountPanel.contains(e.target) &&
+            !userProfileBtn.contains(e.target)) {
+            closeAccountPanel();
+        }
+    });
+
+    // Close sidebar on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeSidebar();
+            closeAccountPanel();
+        }
+    });
+
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            if (window.innerWidth >= 769) {
+                // Desktop: remove overlay
+                sidebarOverlay.classList.remove('active');
+            } else {
+                // Mobile: remove body shift
+                document.body.classList.remove('sidebar-open');
+            }
+        }, 250);
+    });
+
+    // Initialize chat history
+    renderChatHistory();
+
+    console.log('Sidebar initialized');
+}
+
+// Initialize sidebar when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSidebar);
+} else {
+    initSidebar();
+}
