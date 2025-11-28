@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --color-background: #ffffff;
     --color-text-primary: #1a1a1a;
     --color-text-secondary: #6b7280;
@@ -463,7 +463,7 @@ body {
 .modal-close {
     background: transparent;
     border: none;
-    font-size: 28px;
+    
     color: var(--color-text-secondary);
     cursor: pointer;
     padding: 0;
@@ -1013,22 +1013,33 @@ body {
 .search-input {
     width: 100%;
     padding: 8px 12px 8px 36px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    background: var(--color-input-bg);
+    border: 2px solid var(--color-input-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
     font-family: var(--font-family);
     font-size: 14px;
-    background: white;
     color: var(--color-text-primary);
     outline: none;
     transition: border-color 0.2s ease;
 }
 
 .sidebar:not(.open) .search-input {
-    display: none;
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    background: var(--color-input-bg);
+    border: 2px solid var(--color-input-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-family);
+    font-size: 14px;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: border-color 0.2s ease;
 }
 
 .search-input:focus {
-    border-color: var(--color-accent);
+    border-color: #9ca3af;
 }
 
 .search-input::placeholder {
@@ -1159,6 +1170,12 @@ body {
     flex-shrink: 0;
 }
 
+.user-avatar.large {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+}
+
 /* User Info */
 .user-info {
     flex: 1;
@@ -1237,19 +1254,7 @@ body {
     margin-bottom: 12px;
 }
 
-.user-avatar-large {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 20px;
-    flex-shrink: 0;
-}
+
 
 .account-info {
     flex: 1;
@@ -1376,4 +1381,16 @@ body {
 .sidebar:not(.open) .sidebar-chats {
     visibility: hidden;
     pointer-events: none;
+}
+
+
+/* Active state for chat input */
+.input-container:focus-within {
+    border-color: #9ca3af;
+}
+
+.modal-close svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-secondary);
 }
