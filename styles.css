@@ -711,8 +711,9 @@ body {
     opacity: 0;
     transition: opacity 0.2s ease;
 }
- 
- /* ========================================
+
+   
+/* ========================================
    SIDEBAR STYLES
    ======================================== */
 
@@ -745,8 +746,7 @@ body {
     align-items: center;
 }
 
-   SIDEBAR STYLES
-   ======================================== */
+SIDEBAR STYLES========================================*/
 
 /* Sidebar */
 .sidebar {
@@ -1245,6 +1245,7 @@ body {
         justify-content: center;
     }
 }
+
 /* ========================================
    SIDEBAR STYLES
    ======================================== */
@@ -1348,14 +1349,13 @@ body {
     width: 20px;
     height: 20px;
 }
-
 /* ALIGNMENT FIX: Use visibility instead of display */
 .new-chat-btn span {
     visibility: visible;
 }
 
 .sidebar:not(.open) .new-chat-btn span {
-    visibility: hidden;
+    display: none;
 }
 
 .sidebar:not(.open) .new-chat-btn {
@@ -1402,7 +1402,7 @@ body {
 }
 
 .sidebar:not(.open) .search-input {
-    visibility: hidden;
+    display: none;
 }
 
 .search-input:focus {
@@ -1477,7 +1477,7 @@ body {
 }
 
 .sidebar:not(.open) .chat-item-content {
-    visibility: hidden;
+    display: none;
 }
 
 .chat-item-title {
@@ -1545,7 +1545,7 @@ body {
 }
 
 .sidebar:not(.open) .user-info {
-    visibility: hidden;
+    display: none;
 }
 
 .user-name {
@@ -1687,13 +1687,6 @@ body {
 /* Adjust main content for sidebar */
 /* Removed: duplicate body margin */
 
-
-
-
-
-
-}
-
 /* Desktop Responsive */
 @media (min-width: 769px) {
     .sidebar-overlay {
@@ -1753,7 +1746,7 @@ body {
 
 /* Hide logo in collapsed state, center toggle button */
 .sidebar:not(.open) .sidebar-logo {
-    visibility: hidden;
+    display: none;
 }
 
 .sidebar:not(.open) .sidebar-header {
