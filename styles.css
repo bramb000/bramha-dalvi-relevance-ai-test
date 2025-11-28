@@ -885,9 +885,7 @@ body {
     flex-direction: column;
     transition: width 0.3s ease;
     z-index: 150;
-    /* Removed overflow properties to allow popover to overflow */
 }
-
 .sidebar.open {
     width: 260px;
 }
@@ -1309,20 +1307,12 @@ body {
     }
 
     .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 60px;
-    background: #f9fafb;
-    border-right: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-    transition: width 0.3s ease;
-    z-index: 150;
-    /* Removed overflow properties to allow popover to overflow */
-}
-
+        transform: translateX(-100%);
+        max-height: 100vh;
+        max-height: 100dvh;
+        width: 280px;
+        border-right: none;
+    }
     .sidebar.open {
         transform: translateX(0);
         width: 280px;
