@@ -1373,3 +1373,7 @@ body {
 .sidebar:not(.open) .sidebar-header {
     justify-content: center;
 }
+.sidebar:not(.open) .sidebar-chats {
+    visibility: hidden;
+    pointer-events: none;
+}
