@@ -1576,3 +1576,27 @@ body.sidebar-open {
         border-top-right-radius: 0;
     }
 }
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 12px;
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background-color: #f3f4f6;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

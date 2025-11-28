@@ -952,8 +952,14 @@ function initSidebar() {
         return;
     }
 
-    // Initialize with open state and body margin
-    document.body.classList.add('sidebar-open');
+    // Initialize sidebar state based on screen size
+    if (window.innerWidth >= 769) {
+        // Desktop: start expanded
+        document.body.classList.add('sidebar-open');
+    } else {
+        // Mobile: start collapsed (hidden)
+        sidebar.classList.remove('open');
+    }
 
     // Toggle sidebar
     function toggleSidebar() {
@@ -1014,6 +1020,12 @@ function initSidebar() {
     // Event Listeners
     sidebarToggle.addEventListener('click', toggleSidebar);
     sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', toggleSidebar);
+    }
 
     if (userProfileBtn) {
         userProfileBtn.addEventListener('click', toggleAccountPanel);
