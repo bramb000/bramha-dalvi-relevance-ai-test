@@ -1,34 +1,10 @@
-/*
- * ========================================
- * CHAT APPLICATION WITH AI CHARACTER
- * ========================================
- * 
- * This script powers an interactive chat interface with an animated pixel character.
- * The character responds to user input by changing its direction based on where
- * the cursor is in the text input field.
- * 
- * Main Features:
- * 1. Character tracking - The pixel character looks in different directions based on cursor position
- * 2. Typing animation - Simulates AI "thinking" with animated thought bubbles
- * 3. Chat messages - Displays user and AI messages in a conversation format
- * 4. Modal dialog - Shows detailed process information when "Verify truth" button is clicked
- * 5. Expandable sections - Allows users to expand/collapse detailed SQL queries
+/**
+ * Chat Application with AI Character
+ * Handles character animation, chat interface, and modal interactions.
  */
 
-// ========================================
-// CHARACTER DIRECTION TRACKING
-// ========================================
 /**
- * CharacterTracker Class
- * 
- * Purpose: Makes the pixel character look in different directions based on where
- * the user is typing in the text input field.
- * 
- * How it works:
- * - Monitors the cursor position in the textarea
- * - If cursor is on the left side → character looks left
- * - If cursor is on the right side → character looks right
- * - If cursor is in the middle → character looks down
+ * Tracks cursor position to update character direction.
  */
 class CharacterTracker {
     constructor(characterElement, textarea) {
@@ -177,16 +153,8 @@ class CharacterTracker {
     }
 }
 
-// ========================================
-// TYPING ANIMATION
-// ========================================
 /**
- * TypeWriter Class
- * 
- * Purpose: Creates a typewriter effect where text appears letter by letter
- * Used for the AI's "thinking" animation in the thought bubble
- * 
- * Example: "Thinking..." appears one letter at a time: T...Th...Thi...
+ * Simulates typewriter effect for text.
  */
 class TypeWriter {
     constructor(element) {
@@ -249,29 +217,20 @@ class TypeWriter {
     }
 }
 
-// ========================================
-// TEXTAREA AUTO-RESIZE
-// ========================================
 /**
- * Auto-resize the textarea as the user types
- * 
- * Purpose: Makes the text input field grow taller when the user types multiple lines
- * This prevents scrolling inside the input field
+ * Auto-resizes textarea height based on content.
+ * @param {HTMLTextAreaElement} textarea 
  */
 function autoResizeTextarea(textarea) {
     textarea.style.height = 'auto';  // Reset height
     textarea.style.height = `${textarea.scrollHeight}px`;  // Set to content height
 }
 
-// ========================================
-// CHAT MESSAGE DISPLAY
-// ========================================
 /**
- * Add a message to the chat conversation
- * 
- * @param type - Either 'user' or 'ai' to determine styling and layout
- * @param content - The message text to display
- * @param avatar - Optional avatar image for AI messages
+ * Adds a message to the chat.
+ * @param {'user'|'ai'} type 
+ * @param {string} content 
+ * @param {string} [avatar] 
  */
 function addMessage(type, content, avatar = null) {
     const chatMessages = document.getElementById('chatMessages');
@@ -298,19 +257,8 @@ function addMessage(type, content, avatar = null) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// ========================================
-// AI CONVERSATION SIMULATION
-// ========================================
 /**
- * Simulate the AI "thinking" and responding
- * 
- * This creates the animated sequence where:
- * 1. The thought bubble appears above the character
- * 2. Different thoughts are typed and deleted
- * 3. The character and bubble animate away
- * 4. The AI response appears in the chat
- * 
- * Note: This is all hardcoded/simulated - no real AI is being called
+ * Simulates AI thinking and response sequence.
  */
 async function simulateAIConversation() {
     // Get references to the elements we'll animate
@@ -373,14 +321,8 @@ async function simulateAIConversation() {
     addVerifyButton();
 }
 
-// ========================================
-// VERIFY TRUTH BUTTON
-// ========================================
 /**
- * Add the "Verify truth" button after the AI response
- * 
- * Purpose: This button allows users to see the detailed process/data
- * that the AI used to generate its response
+ * Adds the "Verify truth" button to chat.
  */
 function addVerifyButton() {
     const chatMessages = document.getElementById('chatMessages');
@@ -407,13 +349,8 @@ function addVerifyButton() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// ========================================
-// MODAL DIALOG CONTROLS
-// ========================================
 /**
- * Open the modal dialog
- * 
- * The modal shows the detailed SQL queries and analysis process
+ * Opens the process modal.
  */
 function openModal() {
     const modal = document.getElementById('processModal');
@@ -432,28 +369,11 @@ function closeModal() {
     }
 }
 
-// ========================================
-// MESSAGE SUBMISSION TRACKING
-// ========================================
-/**
- * Track whether a message has been submitted
- * 
- * This prevents the user from submitting multiple messages
- * (since this is a demo with hardcoded responses)
- */
+// Prevents multiple submissions in this demo
 let messageSubmitted = false;
 
-// ========================================
-// INITIALIZATION - RUNS WHEN PAGE LOADS
-// ========================================
 /**
- * Set up all the interactive features when the page finishes loading
- * 
- * This is the main entry point that:
- * 1. Finds all the HTML elements we need
- * 2. Sets up event listeners (click, type, etc.)
- * 3. Initializes the character tracker
- * 4. Handles form submission
+ * Initializes application logic on load.
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Find the main elements we need
@@ -641,14 +561,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ========================================
-// GRAPH RENDERING
-// ========================================
 /**
- * Render the A/B Test Result Graph
- * 
- * Draws two bell curves (Normal Distribution) using SVG
- * Includes hover effects and tooltips
+ * Renders the A/B Test Result Graph using SVG.
  */
 function renderGraph() {
     const container = document.getElementById('abTestGraph');
@@ -910,26 +824,8 @@ function renderGraph() {
     svg.addEventListener('touchend', hideTooltip);
 }
 
-// ========================================
-// SIDEBAR FUNCTIONALITY
-// ========================================
-
 /**
- * Sidebar Manager
- * 
- * Handles:
-// ========================================
-// SIDEBAR FUNCTIONALITY
-// ========================================
-
-/**
- * Sidebar Manager
- * 
- * Handles:
- * - Sidebar toggle (collapsed/expanded)
- * - Chat history rendering
- * - Account panel toggle
- * - Body margin adjustment
+ * Manages sidebar interactions and state.
  */
 
 // Chat history data (hardcoded for demo)
