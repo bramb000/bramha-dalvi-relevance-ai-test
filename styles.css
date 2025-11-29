@@ -212,7 +212,7 @@ body {
 /* --- Message & Verify Button Container --- */
 .message,
 .verify-button-container {
-    width: 90%;
+    width: calc(100% - 2rem);
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -705,14 +705,6 @@ body {
     z-index: 150;
 }
 
-.message {
-    display: flex;
-    gap: 12px;
-    max-width: 85%;
-    animation: fadeIn 0.3s ease-out;
-    scroll-margin-top: 100px;
-}
-
 .sidebar.open {
     width: 286px;
 }
@@ -1178,8 +1170,9 @@ body {
     /* On mobile, use slightly wider width but ensure no overflow */
     .message,
     .verify-button-container {
-        width: 94%;
-        max-width: 100%;
+        width: calc(100% - 1rem);
+        max-width: 800px;
+        margin: 0 auto 1rem auto;
     }
 
     /* Stack AI messages vertically on mobile */
@@ -1204,7 +1197,8 @@ body {
 
     .input-container {
         width: calc(100% - 1rem);
-        margin: 0.5rem;
+        margin: 0.5rem auto;
+        max-width: 800px;
     }
 
     /* Merged Mobile Styles */
