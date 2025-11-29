@@ -1113,7 +1113,7 @@ body {
 }
 
 /* Desktop Responsive */
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
     .sidebar-overlay {
         display: none;
     }
@@ -1152,7 +1152,7 @@ body {
 }
 
 /* Moved Mobile Styles */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     /* Toggle icons on mobile */
     .icon-mobile {
         display: block;
