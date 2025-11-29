@@ -46,7 +46,8 @@ body {
     z-index: 100;
     background: var(--color-background);
     width: 100%;
-    display: none; /* Hidden on desktop */
+    display: none;
+    /* Hidden on desktop */
 }
 
 .header-container {
@@ -206,7 +207,8 @@ body {
     z-index: 100;
     background: var(--color-background);
     width: 100%;
-    display: none; /* Hidden on desktop */
+    display: none;
+    /* Hidden on desktop */
 }
 
 .header-container {
@@ -465,7 +467,7 @@ body {
 .modal-close {
     background: transparent;
     border: none;
-    
+
     color: var(--color-text-secondary);
     cursor: pointer;
     padding: 0;
@@ -888,6 +890,7 @@ body {
     transition: width 0.3s ease;
     z-index: 150;
 }
+
 .sidebar.open {
     width: 286px;
 }
@@ -946,7 +949,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 12px;
+    padding: 10px 12px 10px 6px;
     background: transparent;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -979,11 +982,6 @@ body {
     display: none;
 }
 
-.sidebar:not(.open) .new-chat-btn {
-    justify-content: center;
-    padding: 10px;
-}
-
 /* Search Container */
 .search-container {
     position: relative;
@@ -1001,11 +999,6 @@ body {
     width: 16px;
     height: 16px;
     transition: left 0.3s ease, transform 0.3s ease;
-}
-
-.sidebar:not(.open) .search-icon {
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 /* Search Input */
@@ -1128,7 +1121,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px;
+    padding: 8px 8px 8px 4px;
     background: transparent;
     border: none;
     border-radius: var(--radius-md);
@@ -1139,10 +1132,6 @@ body {
 
 .user-profile:hover {
     background-color: #f3f4f6;
-}
-
-.sidebar:not(.open) .user-profile {
-    justify-content: center;
 }
 
 .user-avatar {
@@ -1212,9 +1201,12 @@ body {
 /* Account Panel */
 .account-panel {
     position: absolute;
-    bottom: 76px; /* Height of footer + border */
-    left: 10px; /* Offset from left edge */
-    width: 260px; /* Fixed width matching expanded sidebar */
+    bottom: 76px;
+    /* Height of footer + border */
+    left: 10px;
+    /* Offset from left edge */
+    width: 260px;
+    /* Fixed width matching expanded sidebar */
     background: white;
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -1315,27 +1307,31 @@ body {
         width: 280px;
         border-right: none;
     }
+
     .sidebar.open {
         transform: translateX(0);
         width: 280px;
     }
 
     .account-panel {
-    position: absolute;
-    bottom: 76px; /* Height of footer + border */
-    left: 10px; /* Offset from left edge */
-    width: 260px; /* Fixed width matching expanded sidebar */
-    background: white;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(10px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease-out;
-    z-index: 20;
-    overflow: hidden;
-}
+        position: absolute;
+        bottom: 76px;
+        /* Height of footer + border */
+        left: 10px;
+        /* Offset from left edge */
+        width: 260px;
+        /* Fixed width matching expanded sidebar */
+        background: white;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease-out;
+        z-index: 20;
+        overflow: hidden;
+    }
 
     /* Show mobile menu toggle on mobile */
     .mobile-menu-toggle {
@@ -1358,7 +1354,7 @@ body {
     .header {
         display: block;
     }
-    }
+}
 
 /* Collapsed state */
 .sidebar:not(.open) .sidebar-logo {
@@ -1368,6 +1364,7 @@ body {
 .sidebar:not(.open) .sidebar-header {
     justify-content: center;
 }
+
 .sidebar:not(.open) .sidebar-chats {
     visibility: hidden;
     pointer-events: none;
