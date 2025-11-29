@@ -97,8 +97,20 @@ body {
     max-width: 800px;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     transition: bottom 0.1s ease-out;
+}
+
+.intro-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 24px;
+    white-space: pre-line;
+    line-height: 1.5;
 }
 
 .pixel-character {

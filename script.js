@@ -423,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Note: The actual message is ignored and replaced with a hardcoded one
      * This is because the demo has a pre-scripted conversation
      */
-    function handleSubmit() {
+    async function handleSubmit() {
         // Prevent multiple submissions
         if (messageSubmitted) {
             return;
@@ -445,6 +445,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mark as submitted to prevent further submissions
             messageSubmitted = true;
             updateSubmitButton();
+
+            // Animate intro text away if it exists
+            const introText = document.getElementById('introText');
+            if (introText) {
+                const typeWriter = new TypeWriter(introText);
+                typeWriter.text = introText.textContent;
+                // Calculate speed to take approx 2 seconds
+                // Speed = Duration / Character Count
+                const duration = 2000; // 2 seconds
+                const charCount = typeWriter.text.length;
+                const speed = Math.max(10, Math.floor(duration / charCount));
+
+                await typeWriter.delete(speed);
+                // Remove the element after animation to prevent layout issues
+                introText.style.display = 'none';
+            }
 
             // Start the AI's animated response sequence
             simulateAIConversation();
