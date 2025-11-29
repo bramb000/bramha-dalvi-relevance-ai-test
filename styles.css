@@ -1252,8 +1252,13 @@ body {
         overflow: visible;
     }
 
-    body {
+    html {
+        height: auto;
         overflow-y: auto;
+    }
+
+    body {
+        overflow-y: visible;
         height: auto;
         min-height: 100dvh;
     }
