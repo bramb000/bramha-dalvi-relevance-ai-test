@@ -225,14 +225,15 @@ function autoResizeTextarea(textarea) {
     textarea.style.height = 'auto';  // Reset height
     textarea.style.height = `${textarea.scrollHeight}px`;  // Set to content height
 }
-
 /**
  * Adds a message to the chat.
  * @param {'user'|'ai'} type 
  * @param {string} content 
  * @param {string} [avatar] 
+ * @param {boolean} shouldScroll - Whether to auto-scroll to the bottom (default: true)
+ * @returns {HTMLElement} The created message element
  */
-function addMessage(type, content, avatar = null) {
+function addMessage(type, content, avatar = null, shouldScroll = true) {
     const chatMessages = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
@@ -254,7 +255,10 @@ function addMessage(type, content, avatar = null) {
 
     // Add to chat and scroll to show the new message
     chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    if (shouldScroll) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
     return messageDiv;
 }
@@ -317,10 +321,15 @@ async function simulateAIConversation() {
     </ul>`;
 
     // Add the AI response to the chat
-    const messageElement = addMessage('ai', aiResponse, 'assets/character/idle.png');
+    // Pass false for shouldScroll to prevent jumping to bottom, allowing smooth scroll to top
+    const messageElement = addMessage('ai', aiResponse, 'assets/character/idle.png', false);
 
     // Scroll the message to the top of the view (respecting scroll-margin-top)
-    messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll the message to the top of the view (respecting scroll-margin-top)
+    // Use a small timeout to ensure the DOM is fully updated and layout is stable
+    setTimeout(() => {
+        smoothScrollTo(messageElement, 1500); // 1.5s duration for very smooth effect
+    }, 100);
 
     // Add the "Verify truth" button after the AI message
     addVerifyButton();
@@ -349,9 +358,6 @@ function addVerifyButton() {
     // Add button to the chat
     buttonContainer.appendChild(button);
     chatMessages.appendChild(buttonContainer);
-
-    // Scroll to show the new button
-    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 /**
@@ -989,4 +995,44 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSidebar);
 } else {
     initSidebar();
+}
+
+
+/**
+ * Smoothly scrolls the container to the target element with custom duration and easing.
+ * @param {HTMLElement} element - The target element to scroll to
+ * @param {number} duration - Duration in milliseconds
+ */
+function smoothScrollTo(element, duration = 1000) {
+    const container = document.getElementById('chatMessages');
+    if (!container || !element) return;
+
+    // Calculate target position
+    // We want the element to be at the top, minus the margin (100px for header)
+    const containerRect = container.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+    const relativeTop = elementRect.top - containerRect.top;
+    const currentScroll = container.scrollTop;
+    
+    // Target is current scroll position + distance to element - margin
+    // We use 100px as the margin (matching the CSS scroll-margin-top we tried to use)
+    const targetScroll = currentScroll + relativeTop - 100;
+
+    const startTime = performance.now();
+
+    function scroll(currentTime) {
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Ease out cubic function for smooth deceleration
+        const ease = 1 - Math.pow(1 - progress, 3);
+        
+        container.scrollTop = currentScroll + (targetScroll - currentScroll) * ease;
+
+        if (progress < 1) {
+            requestAnimationFrame(scroll);
+        }
+    }
+
+    requestAnimationFrame(scroll);
 }
