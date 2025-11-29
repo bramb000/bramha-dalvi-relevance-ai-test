@@ -1248,6 +1248,19 @@ body {
 
     .main-content {
         padding-top: 72px;
+        height: auto;
+        overflow: visible;
+    }
+
+    body {
+        overflow-y: auto;
+        height: auto;
+        min-height: 100dvh;
+    }
+
+    .chat-container {
+        height: auto;
+        overflow: visible;
     }
 }
 
