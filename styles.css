@@ -139,6 +139,17 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.scroll-gradient-overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to top, var(--color-background) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 90;
+}
+
 .chat-input {
     width: 100%;
     min-height: 60px;
@@ -692,6 +703,14 @@ body {
     flex-direction: column;
     transition: width 0.3s ease;
     z-index: 150;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    max-width: 85%;
+    animation: fadeIn 0.3s ease-out;
+    scroll-margin-top: 100px;
 }
 
 .sidebar.open {

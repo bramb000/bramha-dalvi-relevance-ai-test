@@ -255,6 +255,8 @@ function addMessage(type, content, avatar = null) {
     // Add to chat and scroll to show the new message
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return messageDiv;
 }
 
 /**
@@ -315,7 +317,10 @@ async function simulateAIConversation() {
     </ul>`;
 
     // Add the AI response to the chat
-    addMessage('ai', aiResponse, 'assets/character/idle.png');
+    const messageElement = addMessage('ai', aiResponse, 'assets/character/idle.png');
+
+    // Scroll the message to the top of the view (respecting scroll-margin-top)
+    messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     // Add the "Verify truth" button after the AI message
     addVerifyButton();
