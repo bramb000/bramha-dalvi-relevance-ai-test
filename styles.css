@@ -1124,7 +1124,7 @@ body {
 
     .chat-messages {
         max-height: calc(100vh - 220px);
-        padding-bottom: 6rem;
+        padding-bottom: 12rem;
     }
 
     /* On mobile, use slightly wider width but ensure no overflow */
@@ -1158,6 +1158,7 @@ body {
         width: calc(100% - 1rem);
         margin: 0.5rem;
     }
+
     /* Merged Mobile Styles */
     html {
         height: 100%;
@@ -1226,6 +1227,15 @@ body {
 
     .header {
         display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .main-content {
+        padding-top: 72px;
     }
 }
 
@@ -1237,6 +1247,6 @@ body {
 
     .chat-messages {
         max-height: calc(100vh - 200px);
-        padding-bottom: 6rem;
+        padding-bottom: 12rem;
     }
 }
