@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hasText = chatInput.value.trim().length > 0;
         submitButton.disabled = !hasText;
         chatInput.disabled = false;
-        chatInput.placeholder = "Type your message... (everything is hardcoded)";
+        chatInput.placeholder = "Type your message...";
     }
 
     // ========================================

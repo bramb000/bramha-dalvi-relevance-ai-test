@@ -46,6 +46,7 @@ body {
     z-index: 100;
     background: var(--color-background);
     width: 100%;
+    display: none; /* Hidden on desktop */
 }
 
 .header-container {
@@ -205,6 +206,7 @@ body {
     z-index: 100;
     background: var(--color-background);
     width: 100%;
+    display: none; /* Hidden on desktop */
 }
 
 .header-container {
@@ -1352,7 +1354,11 @@ body {
     .mobile-menu-toggle:hover {
         background-color: #f3f4f6;
     }
-}
+
+    .header {
+        display: block;
+    }
+    }
 
 /* Collapsed state */
 .sidebar:not(.open) .sidebar-logo {
