@@ -538,13 +538,9 @@ body {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .header-container {
-        padding: 0 0.5rem;
+        padding: var(--spacing-sm) var(--spacing-md);
     }
 
-
-    .sidebar-header {
-        padding: 0 0.5rem;
-    }
     .pixel-character {
         width: 96px;
         height: 96px;
@@ -1222,12 +1218,6 @@ body {
     .header {
         display: block;
     }
-
-    /* Center sidebar toggle button when sidebar is collapsed on mobile */
-    .sidebar:not(.open) .sidebar-header {
-        justify-content: center;
-        padding: 0;
-    }
 }
 
 /* Collapsed state */
@@ -1237,7 +1227,6 @@ body {
 
 .sidebar:not(.open) .sidebar-header {
     justify-content: center;
-        padding: 0;
 }
 
 .sidebar:not(.open) .sidebar-chats {
