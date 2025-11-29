@@ -1103,6 +1103,15 @@ body {
 
 /* Adjust main content for sidebar */
 
+
+/* Icon toggling for sidebar button */
+.icon-mobile {
+    display: none;
+}
+.icon-desktop {
+    display: block;
+}
+
 /* Desktop Responsive */
 @media (min-width: 769px) {
     .sidebar-overlay {
@@ -1144,6 +1153,14 @@ body {
 
 /* Moved Mobile Styles */
 @media (max-width: 768px) {
+    /* Toggle icons on mobile */
+    .icon-mobile {
+        display: block;
+    }
+    .icon-desktop {
+        display: none;
+    }
+
     .header-container {
         padding: var(--spacing-sm) var(--spacing-md);
     }
