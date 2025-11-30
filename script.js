@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hasText = chatInput.value.trim().length > 0;
         submitButton.disabled = !hasText;
         chatInput.disabled = false;
-        chatInput.placeholder = "Type your message...";
+        chatInput.placeholder = "Type your message... (The final message will be auto generated for the prototype)";
     }
 
     // ========================================
@@ -1013,7 +1013,7 @@ function smoothScrollTo(element, duration = 1000) {
     const elementRect = element.getBoundingClientRect();
     const relativeTop = elementRect.top - containerRect.top;
     const currentScroll = container.scrollTop;
-    
+
     // Target is current scroll position + distance to element - margin
     // We use 100px as the margin (matching the CSS scroll-margin-top we tried to use)
     const targetScroll = currentScroll + relativeTop - 100;
@@ -1023,10 +1023,10 @@ function smoothScrollTo(element, duration = 1000) {
     function scroll(currentTime) {
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
+
         // Ease out cubic function for smooth deceleration
         const ease = 1 - Math.pow(1 - progress, 3);
-        
+
         container.scrollTop = currentScroll + (targetScroll - currentScroll) * ease;
 
         if (progress < 1) {
