@@ -111,6 +111,7 @@ body {
     margin-bottom: 24px;
     white-space: pre-line;
     line-height: 1.5;
+    padding: 24px;
 }
 
 .pixel-character {
@@ -1100,6 +1101,7 @@ body {
 .icon-mobile {
     display: none;
 }
+
 .icon-desktop {
     display: block;
 }
@@ -1145,10 +1147,12 @@ body {
 
 /* Moved Mobile Styles */
 @media (max-width: 768px) {
+
     /* Toggle icons on mobile */
     .icon-mobile {
         display: block;
     }
+
     .icon-desktop {
         display: none;
     }
